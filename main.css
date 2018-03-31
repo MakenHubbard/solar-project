@@ -21,3 +21,12 @@ h1 {
     border: 1px solid yellow;
     text-align: center;
 }
+
+img {
+    height: 15%px;
+    width: 200px;
+}
+
+.hide {
+    display: none;
+}
