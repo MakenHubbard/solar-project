@@ -6,3 +6,27 @@ h1 {
     text-align: center;
     color: grey;
 }
+
+#main-cards {
+    color: blue;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: ;
+}
+
+.cards {
+    margin:1%;
+    width: 30%;
+    height: 300px;
+    border: 1px solid yellow;
+    text-align: center;
+}
+
+img {
+    height: 15%px;
+    width: 200px;
+}
+
+.hide {
+    display: none;
+}
