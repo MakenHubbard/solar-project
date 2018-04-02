@@ -28,6 +28,27 @@ const buildSearchBar = () => {
 
 }
 
+const printBigToDom = (strang,divId) => {
+    document.getElementById(divId).innerHTML = strang;
+}
+
+const bigCardBuilder = (planObject) => {
+    let strang = '';
+    planObject.forEach((planet) => {
+        strang = `<div class="big-card">
+                    <img class="hide" src="${planet.name}</h2>"
+                    <h2>${planet.name}</h2>
+                    <p>${description}</p>
+                    <ul>
+                        <li>${isGasPlanet}</li>
+                        <li>${numberOfMoons}</li>
+                        <li>${nameOfLargestMoons}</li>
+                    </ul>
+                  </div>`
+    })
+    printBigToDom(strang);
+}
+
 function executeThisIfXHRFails () {
     console.log("error");
 }   
@@ -36,6 +57,10 @@ function executeCodeAfterFileLoad () {
     const data = JSON.parse(this.responseText);
     buildDomString(data.planets);
     addImageEventListener();
+}
+
+const addClickEventListener () {
+    
 }
 
 
