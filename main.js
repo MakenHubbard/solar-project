@@ -1,3 +1,5 @@
+let searchBar = document.getElementById('searchy')
+
 const startApp = () => {
     let myRequest = new XMLHttpRequest();
     myRequest.addEventListener("load",executeCodeAfterFileLoad);
@@ -17,7 +19,7 @@ const buildDomString = (planetArray) => {
     planetArray.forEach((planet) => {
         domString += `<div class= "cards">
                         <h2>${planet.name}</h2>
-                        <img class="hide" src="${planet.imageUrl}">
+                        <img class="hide images" src="${planet.imageUrl}">
                       </div>`;
         
     })
@@ -25,7 +27,6 @@ const buildDomString = (planetArray) => {
 }
 
 const buildSearchBar = () => {
-
 }
 
 const printBigToDom = (strang,divId) => {
@@ -36,7 +37,7 @@ const bigCardBuilder = (planObject) => {
     let strang = '';
     planObject.forEach((planet) => {
         strang = `<div class="big-card">
-                    <img class="hide" src="${planet.name}</h2>"
+                    <img class="hide images" src="${planet.name}</h2>"
                     <h2>${planet.name}</h2>
                     <p>${description}</p>
                     <ul>
@@ -53,15 +54,31 @@ function executeThisIfXHRFails () {
     console.log("error");
 }   
 
+const addClickEventListener = () => {
+    let planetPics = document.getElementsByClassName('images');
+    console.log(planetPics);
+    for (i=0; i<planetPics.length; i++){
+        planetPics[i].addEventListener('click',showBigCard)
+    }
+};
+
 function executeCodeAfterFileLoad () {
     const data = JSON.parse(this.responseText);
     buildDomString(data.planets);
     addImageEventListener();
+    addClickEventListener();
 }
 
-const addClickEventListener () {
-    
-}
+//frenchButt.addEventListener('click', (e) => {
+//const userInput = inputSpot.value.toLowerCase().split(' ');
+//let domOutput = '';
+//userInput.forEach(word => {
+
+
+ const showBigCard = (e) => {
+  //   const displayInfo = e.target
+     console.log(e);
+ }
 
 
 const addImageEventListener = () => {
