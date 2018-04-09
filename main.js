@@ -1,6 +1,6 @@
 let searchBar = document.getElementById('searchy')
 
-const startApp = () => {
+const firstRequest = () => {
     let myRequest = new XMLHttpRequest();
     myRequest.addEventListener("load",executeCodeAfterFileLoad);
     myRequest.addEventListener("error",executeThisIfXHRFails);
@@ -8,11 +8,28 @@ const startApp = () => {
     myRequest.send();
 }
 
-startApp();
-
-const printToDom = (domString, divId) => {
-    document.getElementById(divId).innerHTML = domString;
+const secondRequest = () => {
+    let thisRequest = new XMLHttpRequest();
+    thisRequest.addEventListener("load", successFunction);
+    thisRequest.open("GET",);
+    thisRequest.send();
+    function successFunction () {
+        const 
+    }
 }
+
+firstRequest();
+
+function executeCodeAfterFileLoad () {
+    const data = JSON.parse(this.responseText);
+    buildDomString(data.planets);
+    addImageEventListener();
+    addClickEventListener();
+}
+
+function executeThisIfXHRFails () {
+    console.log("error");
+}  
 
 const buildDomString = (planetArray) => {
     let domString = '';
@@ -26,8 +43,14 @@ const buildDomString = (planetArray) => {
     printToDom(domString,"main-cards");
 }
 
-const buildSearchBar = () => {
+const printToDom = (domString, divId) => {
+    document.getElementById(divId).innerHTML = domString;
 }
+
+// const searchBar = () => {
+//     const userInput = document.getElementById('searchy');
+
+// }
 
 const printBigToDom = (strang,divId) => {
     document.getElementById(divId).innerHTML = strang;
@@ -50,9 +73,7 @@ const bigCardBuilder = (planObject) => {
     printBigToDom(strang);
 }
 
-function executeThisIfXHRFails () {
-    console.log("error");
-}   
+ 
 
 const addClickEventListener = () => {
     let planetPics = document.getElementsByClassName('images');
@@ -60,14 +81,10 @@ const addClickEventListener = () => {
     for (i=0; i<planetPics.length; i++){
         planetPics[i].addEventListener('click',showBigCard)
     }
+    bigCardBuilder();
 };
 
-function executeCodeAfterFileLoad () {
-    const data = JSON.parse(this.responseText);
-    buildDomString(data.planets);
-    addImageEventListener();
-    addClickEventListener();
-}
+
 
 //frenchButt.addEventListener('click', (e) => {
 //const userInput = inputSpot.value.toLowerCase().split(' ');
@@ -76,7 +93,7 @@ function executeCodeAfterFileLoad () {
 
 
  const showBigCard = (e) => {
-  //   const displayInfo = e.target
+     const displayInfo = e.target.classList
      console.log(e);
  }
 
