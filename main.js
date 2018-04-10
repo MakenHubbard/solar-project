@@ -1,35 +1,24 @@
-let searchBar = document.getElementById('searchy')
 
 const firstRequest = () => {
     let myRequest = new XMLHttpRequest();
-    myRequest.addEventListener("load",executeCodeAfterFileLoad);
-    myRequest.addEventListener("error",executeThisIfXHRFails);
-    myRequest.open("GET","planets.json");
+    myRequest.addEventListener("load", executeCodeAfterFileLoad);
+    myRequest.addEventListener("error", executeThisIfXHRFails);
+    myRequest.open("GET", "planets.json");
     myRequest.send();
-}
-
-const secondRequest = () => {
-    let thisRequest = new XMLHttpRequest();
-    thisRequest.addEventListener("load", successFunction);
-    thisRequest.open("GET",);
-    thisRequest.send();
-    function successFunction () {
-        const 
-    }
 }
 
 firstRequest();
 
-function executeCodeAfterFileLoad () {
+function executeCodeAfterFileLoad() {
     const data = JSON.parse(this.responseText);
     buildDomString(data.planets);
     addImageEventListener();
     addClickEventListener();
 }
 
-function executeThisIfXHRFails () {
+function executeThisIfXHRFails() {
     console.log("error");
-}  
+}
 
 const buildDomString = (planetArray) => {
     let domString = '';
@@ -38,84 +27,111 @@ const buildDomString = (planetArray) => {
                         <h2>${planet.name}</h2>
                         <img class="hide images" src="${planet.imageUrl}">
                       </div>`;
-        
+
     })
-    printToDom(domString,"main-cards");
+    printToDom(domString, "main-cards");
 }
 
 const printToDom = (domString, divId) => {
     document.getElementById(divId).innerHTML = domString;
 }
 
-// const searchBar = () => {
-//     const userInput = document.getElementById('searchy');
-
-// }
-
-const printBigToDom = (strang,divId) => {
-    document.getElementById(divId).innerHTML = strang;
+const searchBar = () => {
+     const userInput = document.getElementById('searchy');
+     const planetName = e.target.parentNode.children[0].innerHTML
+    let thisRequest = new XMLHttpRequest();
+    thisRequest.addEventListener("load", successFunction);
+    thisRequest.open("GET", 'planets.json' );
+    thisRequest.send();
+    console.log(successFunction);
+    function successFunction () {
+        const searchArray = JSON.parse(this.responseText).planets; 
+        console.log(searchArray);
+        for ( let i=0; i<searchArray.length; i++) {
+            if (userInput.value === planetName){
+                userInput.value.push(searchArray);
+                // console.log(searchArray);
+            } 
+        }
+    }
 }
 
-const bigCardBuilder = (planObject) => {
+const clickButtListener = () => {
+   const thearch = document.getElementById('searchButt');
+   console.log(thearch);
+   thearch.addEventListener('click', );
+   console.log();
+}
+
+const bigCardBuilder = (planet) => {
     let strang = '';
-    planObject.forEach((planet) => {
         strang = `<div class="big-card">
-                    <img class="hide images" src="${planet.name}</h2>"
+                    <button id="close-out">X</button>
+                    <img class="hide images" src="${planet.imageUrl}">
                     <h2>${planet.name}</h2>
-                    <p>${description}</p>
+                    <p>${planet.description}</p>
                     <ul>
-                        <li>${isGasPlanet}</li>
-                        <li>${numberOfMoons}</li>
-                        <li>${nameOfLargestMoons}</li>
+                        <li>${planet.isGasPlanet}</li>
+                        <li>${planet.numberOfMoons}</li>
+                        <li>${planet.nameOfLargestMoon}</li>
                     </ul>
                   </div>`
-    })
-    printBigToDom(strang);
+    printToDom(strang, "main-cards");
+    closeOutListener();
 }
 
- 
+const closeOutListener = () => {
+   const ex = document.getElementById("close-out");
+   ex.addEventListener('click', clicky);
+}
+
+const clicky = () => {
+    firstRequest();
+}
 
 const addClickEventListener = () => {
     let planetPics = document.getElementsByClassName('images');
-    console.log(planetPics);
-    for (i=0; i<planetPics.length; i++){
-        planetPics[i].addEventListener('click',showBigCard)
+   // console.log(planetPics);
+    for (i = 0; i < planetPics.length; i++) {
+        planetPics[i].addEventListener('click', showBigCard)
     }
-    bigCardBuilder();
 };
 
-
-
-//frenchButt.addEventListener('click', (e) => {
-//const userInput = inputSpot.value.toLowerCase().split(' ');
-//let domOutput = '';
-//userInput.forEach(word => {
-
-
- const showBigCard = (e) => {
-     const displayInfo = e.target.classList
-     console.log(e);
- }
+const showBigCard = (e) => {
+    const planetName = e.target.parentNode.children[0].innerHTML
+    let thisRequest = new XMLHttpRequest();
+    thisRequest.addEventListener("load", successFunction);
+    thisRequest.open("GET", 'planets.json' );
+    thisRequest.send();
+    function successFunction () {
+        const data = JSON.parse(this.responseText).planets;
+        for ( let i=0; i<data.length; i++) {
+            if (data[i].name === planetName){
+                bigCardBuilder(data[i]);
+            } 
+        }
+    }
+}
 
 
 const addImageEventListener = () => {
     const imageHover = document.getElementsByClassName('cards');
-    for (let i=0; i<imageHover.length; i++) {
-        imageHover[i].addEventListener('mouseenter',showImage);
-        imageHover[i].addEventListener('mouseleave',hideImage);
-    }   
+    for (let i = 0; i < imageHover.length; i++) {
+        imageHover[i].addEventListener('mouseenter', showImage);
+        imageHover[i].addEventListener('mouseleave', hideImage);
+    }
 }
 
 const showImage = (e) => {
     const displayImage = e.target.children[1];
-        displayImage.classList.remove('hide');
+    displayImage.classList.remove('hide');
     const displayName = e.target.children[0];
-        displayName.classList.add('hide');
+    displayName.classList.add('hide');
 }
 
 const hideImage = (e) => {
     const displayImage = e.target.children[1];
     displayImage.classList.add('hide');
-const displayName = e.target.children[0];
+    const displayName = e.target.children[0];
     displayName.classList.remove('hide');
 }
