@@ -36,9 +36,7 @@ const printToDom = (domString, divId) => {
     document.getElementById(divId).innerHTML = domString;
 }
 
-const searchBar = () => {
-     const userInput = document.getElementById('searchy');
-     const planetName = e.target.parentNode.children[0].innerHTML
+const searchBar = (thearch) => {
     let thisRequest = new XMLHttpRequest();
     thisRequest.addEventListener("load", successFunction);
     thisRequest.open("GET", 'planets.json' );
@@ -48,7 +46,7 @@ const searchBar = () => {
         const searchArray = JSON.parse(this.responseText).planets; 
         console.log(searchArray);
         for ( let i=0; i<searchArray.length; i++) {
-            if (userInput.value === planetName){
+            if (searchArray[i].name.includes(thearch)){
                 userInput.value.push(searchArray);
                 // console.log(searchArray);
             } 
@@ -56,12 +54,16 @@ const searchBar = () => {
     }
 }
 
-const clickButtListener = () => {
-   const thearch = document.getElementById('searchButt');
-   console.log(thearch);
-   thearch.addEventListener('click', );
-   console.log();
+const searchValue = () => {
+   const thearch = document.getElementById('searchy').value;
 }
+
+const searchClick = () => {
+    const searchBooty = document.getElementById('searchButt');
+    searchBooty.addEventListener('click', searchValue);
+}
+
+searchClick();
 
 const bigCardBuilder = (planet) => {
     let strang = '';
