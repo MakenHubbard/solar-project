@@ -39,23 +39,30 @@ const printToDom = (domString, divId) => {
 const searchBar = (thearch) => {
     let thisRequest = new XMLHttpRequest();
     thisRequest.addEventListener("load", successFunction);
-    thisRequest.open("GET", 'planets.json' );
+    thisRequest.open("GET", 'planets.json');
     thisRequest.send();
-    console.log(successFunction);
-    function successFunction () {
-        const searchArray = JSON.parse(this.responseText).planets; 
-        console.log(searchArray);
-        for ( let i=0; i<searchArray.length; i++) {
-            if (searchArray[i].name.includes(thearch)){
-                userInput.value.push(searchArray);
-                // console.log(searchArray);
-            } 
+    function successFunction() {
+        // setting searchArray to getting the data form the json and parsing into in an object and turns it into an array. Planets is a key and the value is the array
+        const searchArray = JSON.parse(this.responseText).planets;
+        let matchPlanet = [];
+        for (let i = 0; i < searchArray.length; i++) {
+            // SearchArray[i] is refering to an individual planet
+            // If the planets names includes what i put in the search bar...
+            if (searchArray[i].name.includes(thearch)) {
+                // I take that value(planet) and put into the empty array named matchPLanet 
+                matchPlanet.push(searchArray[i]);
+            }
         }
+        // this is taking the array matchPlanet and what planet it holds within it and displays it to the dom by using the build To dom function
+        buildDomString(matchPlanet);
+        addImageEventListener();
+        addClickEventListener();
     }
 }
 
 const searchValue = () => {
-   const thearch = document.getElementById('searchy').value;
+    const thearch = document.getElementById('searchy').value;
+    searchBar(thearch);
 }
 
 const searchClick = () => {
@@ -67,7 +74,7 @@ searchClick();
 
 const bigCardBuilder = (planet) => {
     let strang = '';
-        strang = `<div class="big-card">
+    strang = `<div class="big-card">
                     <button id="close-out">X</button>
                     <img class="hide images" src="${planet.imageUrl}">
                     <h2>${planet.name}</h2>
@@ -83,8 +90,8 @@ const bigCardBuilder = (planet) => {
 }
 
 const closeOutListener = () => {
-   const ex = document.getElementById("close-out");
-   ex.addEventListener('click', clicky);
+    const ex = document.getElementById("close-out");
+    ex.addEventListener('click', clicky);
 }
 
 const clicky = () => {
@@ -93,7 +100,6 @@ const clicky = () => {
 
 const addClickEventListener = () => {
     let planetPics = document.getElementsByClassName('images');
-   // console.log(planetPics);
     for (i = 0; i < planetPics.length; i++) {
         planetPics[i].addEventListener('click', showBigCard)
     }
@@ -103,14 +109,14 @@ const showBigCard = (e) => {
     const planetName = e.target.parentNode.children[0].innerHTML
     let thisRequest = new XMLHttpRequest();
     thisRequest.addEventListener("load", successFunction);
-    thisRequest.open("GET", 'planets.json' );
+    thisRequest.open("GET", 'planets.json');
     thisRequest.send();
-    function successFunction () {
+    function successFunction() {
         const data = JSON.parse(this.responseText).planets;
-        for ( let i=0; i<data.length; i++) {
-            if (data[i].name === planetName){
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].name === planetName) {
                 bigCardBuilder(data[i]);
-            } 
+            }
         }
     }
 }
